@@ -59,14 +59,72 @@ public:
 	GLdouble x1, x2, x3, x4;
 };
 
+
+POINT3D getPoint3D (POINT3DH a){
+	POINT3D b = POINT3D((a.x1/a.x4), (a.x2/a.x4), (a.x3/a.x4));
+	return b;
+}
+
+
 class Cube{
 public:
 
-//	Cube(double width, double height, double length){
-//		this->width = width;
-//		this->height = height;
-//		this->length = length;
-//	}
+	Cube(){
+		C0 = POINT3DH(0.5, 0.5, -0.5);
+		C1 = POINT3DH(-0.5, 0.5, -0.5);
+		C2 = POINT3DH(-0.5, -0.5, -0.5);
+		C3 = POINT3DH(0.5, -0.5, -0.5);
+		C4 = POINT3DH(0.5, 0.5, 0.5);
+		C5 = POINT3DH(-0.5, 0.5, 0.5);
+		C6 = POINT3DH(-0.5, -0.5, 0.5);
+		C7 = POINT3DH(0.5, -0.5, 0.5);
+	}
+
+	void draw(){
+		   glColor3f(0.0, 0.0, 1.0);
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		   glEnd();
+
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		   glEnd();
+
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		   glEnd();
+
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		   glEnd();
+
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		   glEnd();
+
+		   glBegin(GL_LINE_LOOP);
+		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		   glEnd();
+
+	}
 
 	POINT3DH C0, C1, C2, C3, C4, C5, C6, C7;
 
@@ -142,12 +200,6 @@ void mul_matrices( double A[ ][ 4 ], double B[ ][ 4 ], double C[ ][ 4 ] )
 				sum = sum + A[ i ][ k ] * B[ k ][ j ];
 			C[ i ][ j ] = sum;
 		}
-}
-
-
-POINT3D getPoint3D (POINT3DH a){
-	POINT3D b = POINT3D((a.x1/a.x4), (a.x2/a.x4), (a.x3/a.x4));
-	return b;
 }
 
 
