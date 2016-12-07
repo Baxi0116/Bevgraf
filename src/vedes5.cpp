@@ -1,5 +1,9 @@
 #include <GL/glut.h>
 #include <math.h>
+#include <vector>
+#include <iostream>
+
+const double PI = 3.141592653589;
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
@@ -20,6 +24,13 @@ public:
 		this->x = x;
 		this->y = y;
 		this->z = z;
+	}
+
+	POINT3D& operator=(const POINT3D& c){
+		this->x = c.x;
+		this->y = c.y;
+		this->z = c.z;
+		return *this;
 	}
 
 	void init(GLdouble x, GLdouble y, GLdouble z){
@@ -47,6 +58,14 @@ public:
 		this->x2 = y;
 		this->x3 = z;
 		this->x4 = 1;
+	}
+
+	POINT3DH& operator=(const POINT3DH& c){
+		this->x1 = c.x1;
+		this->x2 = c.x2;
+		this->x3 = c.x3;
+		this->x4 = c.x4;
+		return *this;
 	}
 
 	void init(GLdouble x, GLdouble y, GLdouble z){
@@ -78,55 +97,83 @@ public:
 		C5 = POINT3DH(-0.5, 0.5, 0.5);
 		C6 = POINT3DH(-0.5, -0.5, 0.5);
 		C7 = POINT3DH(0.5, -0.5, 0.5);
+
+		points.push_back(C0);
+		points.push_back(C1);
+		points.push_back(C2);
+		points.push_back(C3);
+		points.push_back(C4);
+		points.push_back(C5);
+		points.push_back(C6);
+		points.push_back(C7);
 	}
 
 	void draw(){
-		   glColor3f(0.0, 0.0, 1.0);
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
-		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
-		   glEnd();
 
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
-		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
-		   glEnd();
+		for(auto it = points.begin(); it != points.end(); it++){
+			std::cout << ((*it).x1 / (*it).x4)  << " " << ((*it).x2 / (*it).x4)  << " " << ((*it).x3 / (*it).x4)  << std::endl;
+		}
 
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
-		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
-		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
-		   glEnd();
+		glColor3f(0.0, 0.0, 1.0);
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		glEnd();
 
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
-		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
-		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
-		   glEnd();
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		glEnd();
 
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
-		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
-		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		   	   glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
-		   glEnd();
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
+		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		glEnd();
 
-		   glBegin(GL_LINE_LOOP);
-		   	   glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		   	   glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
-		   	   glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		   	   glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
-		   glEnd();
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		glEnd();
+
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		glEnd();
+
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
+		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
+		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		glEnd();
 
 	}
 
+
+	void transformPoints(double m[][4]){
+		POINT3DH q = POINT3DH(0, 0, 0);
+
+		for(auto it = points.begin(); it != points.end(); it++){
+			q.x1 = m[0][0] * (*it).x1 + m[0][1] * (*it).x2 + m[0][2] * (*it).x3 + m[0][3] * (*it).x4;
+			q.x2 = m[1][0] * (*it).x1 + m[1][1] * (*it).x2 + m[1][2] * (*it).x3 + m[1][3] * (*it).x4;
+			q.x3 = m[2][0] * (*it).x1 + m[2][1] * (*it).x2 + m[2][2] * (*it).x3 + m[2][3] * (*it).x4;
+			q.x4 = m[3][0] * (*it).x1 + m[3][1] * (*it).x2 + m[3][2] * (*it).x3 + m[3][3] * (*it).x4;
+			(*it) = q;
+		}
+	}
+
 	POINT3DH C0, C1, C2, C3, C4, C5, C6, C7;
+	std::vector<POINT3DH> points;
 
 };
 
@@ -165,8 +212,8 @@ void keyOperations ( ) {
 }
 
 
-GLdouble alpha = M_PI/6;
-GLdouble beta = M_PI/7;
+GLdouble alpha = PI/6;
+GLdouble beta = PI/7;
 
 GLdouble S[4][4] = {{150, 0, 0, 0},{0, 150, 0, 0}, {0, 0, 150, 0}, {0, 0, 0, 1}};
 GLdouble Y[4][4] = {{cos(alpha), 0, sin(alpha), 0},{0, 1, 0, 0}, {-sin(alpha), 0, cos(alpha), 0}, {0, 0, 0, 1}};
@@ -203,13 +250,9 @@ void mul_matrices( double A[ ][ 4 ], double B[ ][ 4 ], double C[ ][ 4 ] )
 }
 
 
-POINT3DH transzf(GLdouble m[][4], POINT3DH p){
-	POINT3DH q = POINT3DH(0, 0, 0);
-	q.x1 = m[0][0] * p.x1 + m[0][1] * p.x2 + m[0][2] * p.x3 + m[0][3] * p.x4;
-	q.x2 = m[1][0] * p.x1 + m[1][1] * p.x2 + m[1][2] * p.x3 + m[1][3] * p.x4;
-	q.x3 = m[2][0] * p.x1 + m[2][1] * p.x2 + m[2][2] * p.x3 + m[2][3] * p.x4;
-	q.x4 = m[3][0] * p.x1 + m[3][1] * p.x2 + m[3][2] * p.x3 + m[3][3] * p.x4;
-	return q;
+void drawCube(Cube A, double v[][4]){
+	A.transformPoints(v);
+	A.draw();
 }
 
 
@@ -221,11 +264,38 @@ void init (void)
 	glShadeModel( GL_FLAT );
 }
 
+std::vector<Cube> cubes;
+
+void update(int n){
+
+//	Cube A = Cube();
+//	cubes.push_back(A);
+
+	glutPostRedisplay();
+	glutTimerFunc( 1000, update, 0 );
+}
 
 void display(){
 
 	keyOperations();
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble temp2[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble temp3[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+
+
+	mul_matrices(Y, S, temp1);
+	mul_matrices(X, temp1, temp2);
+	mul_matrices(Vc, temp2, temp3);
+	mul_matrices(T, temp3, M);
+
+	Cube A = Cube();
+
+	drawCube(A, M);
+
+	//glutSwapBuffers();
 	glFlush();
 
 }
@@ -242,7 +312,7 @@ int main (int argc, char** argv)
 	glutDisplayFunc (display);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
-	//glutTimerFunc( 5, update, 0 );
+	//glutTimerFunc( 1000, update, 0 );
 	glutMainLoop ( );
 
 	return 0;

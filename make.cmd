@@ -1,1 +1,1 @@
-g++ src/*.cpp -I"./include/" -L"./lib/" -lfreeglut -lopengl32 -lglu32 -o "./bin/otodikvedes.exe"
+g++ src/*.cpp -I"./include/" -L"./lib/" -lfreeglut -lopengl32 -lglu32 -o "./bin/otodikvedes.exe" -std=gnu++11
