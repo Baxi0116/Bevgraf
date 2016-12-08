@@ -93,6 +93,7 @@ public:
 		C1 = POINT3DH(-0.5, 0.5, -0.5);
 		C2 = POINT3DH(-0.5, -0.5, -0.5);
 		C3 = POINT3DH(0.5, -0.5, -0.5);
+
 		C4 = POINT3DH(0.5, 0.5, 0.5);
 		C5 = POINT3DH(-0.5, 0.5, 0.5);
 		C6 = POINT3DH(-0.5, -0.5, 0.5);
@@ -113,48 +114,48 @@ public:
 		for(auto it = points.begin(); it != points.end(); it++){
 			std::cout << ((*it).x1 / (*it).x4)  << " " << ((*it).x2 / (*it).x4)  << " " << ((*it).x3 / (*it).x4)  << std::endl;
 		}
-
+		
 		glColor3f(0.0, 0.0, 1.0);
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
-		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		glVertex2d(getPoint3D(points[0]).x, getPoint3D(points[0]).y);
+		glVertex2d(getPoint3D(points[1]).x, getPoint3D(points[1]).y);
+		glVertex2d(getPoint3D(points[2]).x, getPoint3D(points[2]).y);
+		glVertex2d(getPoint3D(points[3]).x, getPoint3D(points[3]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
-		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
+		glVertex2d(getPoint3D(points[0]).x, getPoint3D(points[0]).y);
+		glVertex2d(getPoint3D(points[1]).x, getPoint3D(points[1]).y);
+		glVertex2d(getPoint3D(points[5]).x, getPoint3D(points[5]).y);
+		glVertex2d(getPoint3D(points[4]).x, getPoint3D(points[4]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C0).x, getPoint3D(C0).y);
-		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
-		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
-		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
+		glVertex2d(getPoint3D(points[0]).x, getPoint3D(points[0]).y);
+		glVertex2d(getPoint3D(points[4]).x, getPoint3D(points[4]).y);
+		glVertex2d(getPoint3D(points[7]).x, getPoint3D(points[7]).y);
+		glVertex2d(getPoint3D(points[3]).x, getPoint3D(points[3]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C3).x, getPoint3D(C3).y);
-		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
-		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
+		glVertex2d(getPoint3D(points[3]).x, getPoint3D(points[3]).y);
+		glVertex2d(getPoint3D(points[7]).x, getPoint3D(points[7]).y);
+		glVertex2d(getPoint3D(points[6]).x, getPoint3D(points[6]).y);
+		glVertex2d(getPoint3D(points[2]).x, getPoint3D(points[2]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C4).x, getPoint3D(C4).y);
-		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
-		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		glVertex2f(getPoint3D(C7).x, getPoint3D(C7).y);
+		glVertex2d(getPoint3D(points[4]).x, getPoint3D(points[4]).y);
+		glVertex2d(getPoint3D(points[5]).x, getPoint3D(points[5]).y);
+		glVertex2d(getPoint3D(points[6]).x, getPoint3D(points[6]).y);
+		glVertex2d(getPoint3D(points[7]).x, getPoint3D(points[7]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(getPoint3D(C1).x, getPoint3D(C1).y);
-		glVertex2f(getPoint3D(C2).x, getPoint3D(C2).y);
-		glVertex2f(getPoint3D(C6).x, getPoint3D(C6).y);
-		glVertex2f(getPoint3D(C5).x, getPoint3D(C5).y);
+		glVertex2d(getPoint3D(points[1]).x, getPoint3D(points[1]).y);
+		glVertex2d(getPoint3D(points[2]).x, getPoint3D(points[2]).y);
+		glVertex2d(getPoint3D(points[6]).x, getPoint3D(points[6]).y);
+		glVertex2d(getPoint3D(points[5]).x, getPoint3D(points[5]).y);
 		glEnd();
 
 	}
@@ -219,19 +220,20 @@ GLdouble S[4][4] = {{150, 0, 0, 0},{0, 150, 0, 0}, {0, 0, 150, 0}, {0, 0, 0, 1}}
 GLdouble Y[4][4] = {{cos(alpha), 0, sin(alpha), 0},{0, 1, 0, 0}, {-sin(alpha), 0, cos(alpha), 0}, {0, 0, 0, 1}};
 GLdouble X[4][4] = {{1, 0, 0, 0},{0, cos(beta), -sin(beta), 0}, {0, sin(beta), cos(beta), 0}, {0, 0, 0, 1}};
 GLdouble T[4][4] = {{1, 0, 0, 400},{0, 1, 0, 300}, {0, 0, 1, 0}, {0, 0, 0, 1}};
-GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/300, 1}};
+GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/3, 1}};
 GLdouble Vm[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 1}};
-GLdouble WTV[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+GLdouble WTV1[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0},{0, 0, 0}};
+GLdouble WTV2[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 
-void window_to_viewport(POINT3D wmax, POINT3D wmin, POINT3D vmax, POINT3D vmin){
+void window_to_viewport(POINT3D wmax, POINT3D wmin, POINT3D vmax, POINT3D vmin, double WTV[][4]){
 
 	WTV[0][0] = (vmax.x - vmin.x) / (wmax.x - wmin.x);
 	WTV[1][1] = (vmax.y - vmin.y) / (wmax.y - wmin.y);
 	WTV[2][2] = 1;
 	WTV[3][3] = 1;
-	WTV[0][3] = (vmin.x - wmin.x) * ((vmax.x - vmin.x) / (wmax.x - wmin.x));
-	WTV[1][3] = (vmin.x - wmin.x) * ((vmax.y - vmin.y) / (wmax.y - wmin.y));
+	WTV[0][3] = vmin.x - wmin.x * ((vmax.x - vmin.x) / (wmax.x - wmin.x));
+	WTV[1][3] = vmin.y - wmin.y * ((vmax.y - vmin.y) / (wmax.y - wmin.y));
 
 }
 
@@ -250,18 +252,11 @@ void mul_matrices( double A[ ][ 4 ], double B[ ][ 4 ], double C[ ][ 4 ] )
 }
 
 
-void drawCube(Cube A, double v[][4]){
-	A.transformPoints(v);
-	A.draw();
-}
-
-
 void init (void)
 {
 	glClearColor (1.0, 1.0, 1.0, 0.0);
 	glMatrixMode (GL_PROJECTION);
 	gluOrtho2D (0.0, 800.0, 0.0, 600.0);
-	glShadeModel( GL_FLAT );
 }
 
 std::vector<Cube> cubes;
@@ -277,26 +272,55 @@ void update(int n){
 
 void display(){
 
-	keyOperations();
+//	keyOperations();
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	window_to_viewport(WinMax, WinMin, View1Max, View1Min, WTV1);
+	window_to_viewport(WinMax, WinMin, View2Max, View2Min, WTV2);
 
 	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 	GLdouble temp2[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 	GLdouble temp3[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble temp4[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble M1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+	GLdouble M2[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
 
-	mul_matrices(Y, S, temp1);
-	mul_matrices(X, temp1, temp2);
-	mul_matrices(Vc, temp2, temp3);
-	mul_matrices(T, temp3, M);
+	mul_matrices(X, Y, temp1);
+	mul_matrices(Vc, temp1, temp2);
+	mul_matrices(WTV1, temp2, M1);
+
+	mul_matrices(X, Y, temp3);
+	mul_matrices(Vm, temp3, temp4);
+	mul_matrices(WTV2, temp4, M2);
+
+	//mul_matrices(WTV1, Vc, M1);
+	//mul_matrices(WTV2, Vc, M2);
+
+
+	/*for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			std::cout << "VTW1[" << i << "][" << j << "] = " << WTV1[i][j] << std::endl;
+		}
+	}
+
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			std::cout << "M1[" << i << "][" << j << "] = " << M1[i][j] << std::endl;
+		}
+	}*/
+
 
 	Cube A = Cube();
+	Cube B = Cube();
 
-	drawCube(A, M);
+	A.transformPoints(M1);
+	A.draw();
+	B.transformPoints(M2);
+	B.draw();
 
-	//glutSwapBuffers();
-	glFlush();
+	glutSwapBuffers();
+	//glFlush();
 
 }
 
@@ -304,7 +328,7 @@ void display(){
 int main (int argc, char** argv)
 {
 	glutInit (&argc, argv);
-	glutInitDisplayMode (GLUT_SINGLE | GLUT_RGB);
+	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowPosition (100, 100);
 	glutInitWindowSize (WIDTH, HEIGHT);
 	glutCreateWindow ("Ötödik vedes");
