@@ -10,6 +10,35 @@ const int HEIGHT = 600;
 
 GLint keyStates[256];
 
+
+void keyPressed (unsigned char key, int x, int y) {
+	keyStates[key] = 1;
+}
+
+
+void keyUp (unsigned char key, int x, int y) {
+	keyStates[key] = 0;
+}
+
+
+GLdouble alpha1 = PI/6;
+GLdouble alpha2 = PI/6;
+GLdouble alpha3 = PI/6;
+GLdouble beta = PI/6;
+GLdouble forg = 0.01;
+
+
+void keyOperations ( ) {
+	if (keyStates['q']) {}
+	if (keyStates['e']) {}
+	if (keyStates['a']) {alpha1 -= forg;}
+	if (keyStates['d']) {alpha1 += forg;}
+	if (keyStates['y']) {}
+	if (keyStates['c']) {}
+
+	glutPostRedisplay( );
+}
+
 class POINT3D {
 
 public:
@@ -111,9 +140,11 @@ public:
 
 	void draw(){
 
-		for(auto it = points.begin(); it != points.end(); it++){
+		keyOperations();
+
+		/*for(auto it = points.begin(); it != points.end(); it++){
 			std::cout << ((*it).x1 / (*it).x4)  << " " << ((*it).x2 / (*it).x4)  << " " << ((*it).x3 / (*it).x4)  << std::endl;
-		}
+		}*/
 		
 		glColor3f(0.0, 0.0, 1.0);
 		glBegin(GL_LINE_LOOP);
@@ -185,46 +216,10 @@ POINT3D WinMin = POINT3D(-1, -1, 0);
 
 //két részre osztjuk az ablakot view1 a bal oldali view2 a jobb oldali
 
-POINT3D View1Max =POINT3D(400, 600, 0);
-POINT3D View1Min =POINT3D(0, 0, 0);
-POINT3D View2Max =POINT3D(400, 0, 0);
-POINT3D View2Min =POINT3D(800, 600, 0);
-
-
-void keyPressed (unsigned char key, int x, int y) {
-	keyStates[key] = 1;
-}
-
-
-void keyUp (unsigned char key, int x, int y) {
-	keyStates[key] = 0;
-}
-
-
-void keyOperations ( ) {
-	if (keyStates['q']) {}
-	if (keyStates['e']) {}
-	if (keyStates['a']) {}
-	if (keyStates['d']) {}
-	if (keyStates['y']) {}
-	if (keyStates['c']) {}
-
-	glutPostRedisplay( );
-}
-
-
-GLdouble alpha = PI/6;
-GLdouble beta = PI/7;
-
-GLdouble S[4][4] = {{150, 0, 0, 0},{0, 150, 0, 0}, {0, 0, 150, 0}, {0, 0, 0, 1}};
-GLdouble Y[4][4] = {{cos(alpha), 0, sin(alpha), 0},{0, 1, 0, 0}, {-sin(alpha), 0, cos(alpha), 0}, {0, 0, 0, 1}};
-GLdouble X[4][4] = {{1, 0, 0, 0},{0, cos(beta), -sin(beta), 0}, {0, sin(beta), cos(beta), 0}, {0, 0, 0, 1}};
-GLdouble T[4][4] = {{1, 0, 0, 400},{0, 1, 0, 300}, {0, 0, 1, 0}, {0, 0, 0, 1}};
-GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/3, 1}};
-GLdouble Vm[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 1}};
-GLdouble WTV1[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0},{0, 0, 0}};
-GLdouble WTV2[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-
+POINT3D View1Max =POINT3D(400, 500, 0);
+POINT3D View1Min =POINT3D(0, 100, 0);
+POINT3D View2Max =POINT3D(400, 100, 0);
+POINT3D View2Min =POINT3D(800, 500, 0);
 
 void window_to_viewport(POINT3D wmax, POINT3D wmin, POINT3D vmax, POINT3D vmin, double WTV[][4]){
 
@@ -261,22 +256,22 @@ void init (void)
 
 std::vector<Cube> cubes;
 
-void update(int n){
-
-//	Cube A = Cube();
-//	cubes.push_back(A);
-
-	glutPostRedisplay();
-	glutTimerFunc( 1000, update, 0 );
-}
 
 void display(){
 
-//	keyOperations();
+	//keyOperations();
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	GLdouble WTV1[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0},{0, 0, 0}};
+	GLdouble WTV2[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 
 	window_to_viewport(WinMax, WinMin, View1Max, View1Min, WTV1);
 	window_to_viewport(WinMax, WinMin, View2Max, View2Min, WTV2);
+
+	GLdouble Y[4][4] = {{cos(alpha1), 0, sin(alpha1), 0},{0, 1, 0, 0}, {-sin(alpha1), 0, cos(alpha1), 0}, {0, 0, 0, 1}};
+	GLdouble X[4][4] = {{1, 0, 0, 0},{0, cos(beta), -sin(beta), 0}, {0, sin(beta), cos(beta), 0}, {0, 0, 0, 1}};
+	GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/3, 1}};
+	GLdouble Vm[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 1}};
 
 	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 	GLdouble temp2[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
@@ -294,9 +289,6 @@ void display(){
 	mul_matrices(Vm, temp3, temp4);
 	mul_matrices(WTV2, temp4, M2);
 
-	//mul_matrices(WTV1, Vc, M1);
-	//mul_matrices(WTV2, Vc, M2);
-
 
 	/*for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
@@ -313,6 +305,16 @@ void display(){
 
 	Cube A = Cube();
 	Cube B = Cube();
+
+	/*A.transformTop(M1);
+	A.transformMid(M2);
+	A.transformBot(M3);
+
+	B.transformTop(M4);
+	B.transformMid(M5);
+	B.transformBot(M6);
+
+	*/
 
 	A.transformPoints(M1);
 	A.draw();
@@ -336,7 +338,6 @@ int main (int argc, char** argv)
 	glutDisplayFunc (display);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
-	//glutTimerFunc( 1000, update, 0 );
 	glutMainLoop ( );
 
 	return 0;
