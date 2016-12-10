@@ -1,7 +1,7 @@
 #include <GL/glut.h>
 #include <math.h>
 #include <vector>
-#include <iostream>
+
 
 const double PI = 3.141592653589;
 
@@ -35,6 +35,11 @@ void keyOperations ( ) {
 	if (keyStates['d']) {alpha2 += forg;}
 	if (keyStates['y']) {alpha3 -= forg;}
 	if (keyStates['c']) {alpha3 += forg;}
+	if (keyStates['r']) {
+		alpha1 = PI/6;
+		alpha2 = PI/6;
+		alpha3 = PI/6;
+	}
 
 	glutPostRedisplay( );
 }
@@ -180,139 +185,68 @@ public:
 	void draw(){
 
 		keyOperations();
-
-		/*for(auto it = pointsTop.begin(); it != pointsTop.end(); it++){
-			std::cout << ((*it).x1 / (*it).x4)  << " " << ((*it).x2 / (*it).x4)  << " " << ((*it).x3 / (*it).x4)  << std::endl;
-		}*/
 		
 		glColor3f(0.0, 0.0, 1.0);
 		glBegin(GL_LINE_LOOP);
+		glVertex2d(getPoint3D(pointsTop[2]).x, getPoint3D(pointsTop[2]).y);
+		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
 		glVertex2d(getPoint3D(pointsTop[0]).x, getPoint3D(pointsTop[0]).y);
 		glVertex2d(getPoint3D(pointsTop[1]).x, getPoint3D(pointsTop[1]).y);
 		glVertex2d(getPoint3D(pointsTop[2]).x, getPoint3D(pointsTop[2]).y);
-		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsTop[0]).x, getPoint3D(pointsTop[0]).y);
+		glVertex2d(getPoint3D(pointsTop[6]).x, getPoint3D(pointsTop[6]).y);
+		glVertex2d(getPoint3D(pointsTop[7]).x, getPoint3D(pointsTop[7]).y);
 		glVertex2d(getPoint3D(pointsTop[4]).x, getPoint3D(pointsTop[4]).y);
 		glVertex2d(getPoint3D(pointsTop[5]).x, getPoint3D(pointsTop[5]).y);
-		glVertex2d(getPoint3D(pointsTop[1]).x, getPoint3D(pointsTop[1]).y);
+		glVertex2d(getPoint3D(pointsTop[6]).x, getPoint3D(pointsTop[6]).y);
 		glEnd();
-
-		glBegin(GL_LINE_LOOP);
+		glBegin(GL_LINES);
 		glVertex2d(getPoint3D(pointsTop[1]).x, getPoint3D(pointsTop[1]).y);
 		glVertex2d(getPoint3D(pointsTop[5]).x, getPoint3D(pointsTop[5]).y);
-		glVertex2d(getPoint3D(pointsTop[6]).x, getPoint3D(pointsTop[6]).y);
-		glVertex2d(getPoint3D(pointsTop[2]).x, getPoint3D(pointsTop[2]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsTop[2]).x, getPoint3D(pointsTop[2]).y);
-		glVertex2d(getPoint3D(pointsTop[6]).x, getPoint3D(pointsTop[6]).y);
-		glVertex2d(getPoint3D(pointsTop[7]).x, getPoint3D(pointsTop[7]).y);
-		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
-		glVertex2d(getPoint3D(pointsTop[7]).x, getPoint3D(pointsTop[7]).y);
-		glVertex2d(getPoint3D(pointsTop[4]).x, getPoint3D(pointsTop[4]).y);
 		glVertex2d(getPoint3D(pointsTop[0]).x, getPoint3D(pointsTop[0]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsTop[4]).x, getPoint3D(pointsTop[4]).y);
-		glVertex2d(getPoint3D(pointsTop[5]).x, getPoint3D(pointsTop[5]).y);
-		glVertex2d(getPoint3D(pointsTop[6]).x, getPoint3D(pointsTop[6]).y);
+		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
 		glVertex2d(getPoint3D(pointsTop[7]).x, getPoint3D(pointsTop[7]).y);
-		glEnd();
-
-
-
-		glColor3f(0.0, 0.0, 1.0);
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsMid[0]).x, getPoint3D(pointsMid[0]).y);
-		glVertex2d(getPoint3D(pointsMid[1]).x, getPoint3D(pointsMid[1]).y);
-		glVertex2d(getPoint3D(pointsMid[2]).x, getPoint3D(pointsMid[2]).y);
-		glVertex2d(getPoint3D(pointsMid[3]).x, getPoint3D(pointsMid[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsMid[0]).x, getPoint3D(pointsMid[0]).y);
-		glVertex2d(getPoint3D(pointsMid[4]).x, getPoint3D(pointsMid[4]).y);
-		glVertex2d(getPoint3D(pointsMid[5]).x, getPoint3D(pointsMid[5]).y);
-		glVertex2d(getPoint3D(pointsMid[1]).x, getPoint3D(pointsMid[1]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsMid[1]).x, getPoint3D(pointsMid[1]).y);
-		glVertex2d(getPoint3D(pointsMid[5]).x, getPoint3D(pointsMid[5]).y);
-		glVertex2d(getPoint3D(pointsMid[6]).x, getPoint3D(pointsMid[6]).y);
-		glVertex2d(getPoint3D(pointsMid[2]).x, getPoint3D(pointsMid[2]).y);
 		glEnd();
 
 		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsMid[2]).x, getPoint3D(pointsMid[2]).y);
+		glVertex2d(getPoint3D(pointsMid[3]).x, getPoint3D(pointsMid[3]).y);
+		glVertex2d(getPoint3D(pointsMid[0]).x, getPoint3D(pointsMid[0]).y);
+		glVertex2d(getPoint3D(pointsMid[1]).x, getPoint3D(pointsMid[1]).y);
+		glVertex2d(getPoint3D(pointsMid[2]).x, getPoint3D(pointsMid[2]).y);
 		glVertex2d(getPoint3D(pointsMid[6]).x, getPoint3D(pointsMid[6]).y);
 		glVertex2d(getPoint3D(pointsMid[7]).x, getPoint3D(pointsMid[7]).y);
-		glVertex2d(getPoint3D(pointsMid[3]).x, getPoint3D(pointsMid[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsMid[3]).x, getPoint3D(pointsMid[3]).y);
-		glVertex2d(getPoint3D(pointsMid[7]).x, getPoint3D(pointsMid[7]).y);
-		glVertex2d(getPoint3D(pointsMid[4]).x, getPoint3D(pointsMid[4]).y);
-		glVertex2d(getPoint3D(pointsMid[0]).x, getPoint3D(pointsMid[0]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsMid[4]).x, getPoint3D(pointsMid[4]).y);
 		glVertex2d(getPoint3D(pointsMid[5]).x, getPoint3D(pointsMid[5]).y);
 		glVertex2d(getPoint3D(pointsMid[6]).x, getPoint3D(pointsMid[6]).y);
+		glEnd();
+		glBegin(GL_LINES);
+		glVertex2d(getPoint3D(pointsMid[1]).x, getPoint3D(pointsMid[1]).y);
+		glVertex2d(getPoint3D(pointsMid[5]).x, getPoint3D(pointsMid[5]).y);
+		glVertex2d(getPoint3D(pointsMid[0]).x, getPoint3D(pointsMid[0]).y);
+		glVertex2d(getPoint3D(pointsMid[4]).x, getPoint3D(pointsMid[4]).y);
+		glVertex2d(getPoint3D(pointsMid[3]).x, getPoint3D(pointsMid[3]).y);
 		glVertex2d(getPoint3D(pointsMid[7]).x, getPoint3D(pointsMid[7]).y);
 		glEnd();
 
-		glColor3f(0.0, 0.0, 1.0);
 		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsBot[0]).x, getPoint3D(pointsBot[0]).y);
-		glVertex2d(getPoint3D(pointsBot[1]).x, getPoint3D(pointsBot[1]).y);
 		glVertex2d(getPoint3D(pointsBot[2]).x, getPoint3D(pointsBot[2]).y);
 		glVertex2d(getPoint3D(pointsBot[3]).x, getPoint3D(pointsBot[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsBot[0]).x, getPoint3D(pointsBot[0]).y);
-		glVertex2d(getPoint3D(pointsBot[4]).x, getPoint3D(pointsBot[4]).y);
-		glVertex2d(getPoint3D(pointsBot[5]).x, getPoint3D(pointsBot[5]).y);
 		glVertex2d(getPoint3D(pointsBot[1]).x, getPoint3D(pointsBot[1]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsBot[1]).x, getPoint3D(pointsBot[1]).y);
-		glVertex2d(getPoint3D(pointsBot[5]).x, getPoint3D(pointsBot[5]).y);
-		glVertex2d(getPoint3D(pointsBot[6]).x, getPoint3D(pointsBot[6]).y);
-		glVertex2d(getPoint3D(pointsBot[2]).x, getPoint3D(pointsBot[2]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsBot[2]).x, getPoint3D(pointsBot[2]).y);
 		glVertex2d(getPoint3D(pointsBot[6]).x, getPoint3D(pointsBot[6]).y);
 		glVertex2d(getPoint3D(pointsBot[7]).x, getPoint3D(pointsBot[7]).y);
-		glVertex2d(getPoint3D(pointsBot[3]).x, getPoint3D(pointsBot[3]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
-		glVertex2d(getPoint3D(pointsBot[3]).x, getPoint3D(pointsBot[3]).y);
-		glVertex2d(getPoint3D(pointsBot[7]).x, getPoint3D(pointsBot[7]).y);
-		glVertex2d(getPoint3D(pointsBot[4]).x, getPoint3D(pointsBot[4]).y);
-		glVertex2d(getPoint3D(pointsBot[0]).x, getPoint3D(pointsBot[0]).y);
-		glEnd();
-
-		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsBot[4]).x, getPoint3D(pointsBot[4]).y);
 		glVertex2d(getPoint3D(pointsBot[5]).x, getPoint3D(pointsBot[5]).y);
 		glVertex2d(getPoint3D(pointsBot[6]).x, getPoint3D(pointsBot[6]).y);
+		glEnd();
+		glBegin(GL_LINES);
+		glVertex2d(getPoint3D(pointsBot[1]).x, getPoint3D(pointsBot[1]).y);
+		glVertex2d(getPoint3D(pointsBot[5]).x, getPoint3D(pointsBot[5]).y);
+		glVertex2d(getPoint3D(pointsBot[0]).x, getPoint3D(pointsBot[0]).y);
+		glVertex2d(getPoint3D(pointsBot[4]).x, getPoint3D(pointsBot[4]).y);
+		glVertex2d(getPoint3D(pointsBot[3]).x, getPoint3D(pointsBot[3]).y);
 		glVertex2d(getPoint3D(pointsBot[7]).x, getPoint3D(pointsBot[7]).y);
 		glEnd();
 
@@ -356,21 +290,8 @@ public:
 		}
 	}
 
-
-/*	void transformPoints(double m[][4]){
-		POINT3DH q = POINT3DH(0, 0, 0);
-
-		for(auto it = points.begin(); it != points.end(); it++){
-			q.x1 = m[0][0] * (*it).x1 + m[0][1] * (*it).x2 + m[0][2] * (*it).x3 + m[0][3] * (*it).x4;
-			q.x2 = m[1][0] * (*it).x1 + m[1][1] * (*it).x2 + m[1][2] * (*it).x3 + m[1][3] * (*it).x4;
-			q.x3 = m[2][0] * (*it).x1 + m[2][1] * (*it).x2 + m[2][2] * (*it).x3 + m[2][3] * (*it).x4;
-			q.x4 = m[3][0] * (*it).x1 + m[3][1] * (*it).x2 + m[3][2] * (*it).x3 + m[3][3] * (*it).x4;
-			(*it) = q;
-		}
-	}*/
-
 	POINT3DH C0, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, C11, C12, C13, C14, C15, C16, C17, C18, C19, C20, C21, C22, C23;
-//	std::vector<POINT3DH> points;
+
 	std::vector<POINT3DH> pointsTop;
 	std::vector<POINT3DH> pointsMid;
 	std::vector<POINT3DH> pointsBot;
@@ -470,55 +391,32 @@ void display(){
 
 
 	mul_matrices(X, Y1, temp1);
-	mul_matrices(Vc, temp1, temp2);
+	mul_matrices(Vm, temp1, temp2);
 	mul_matrices(WTV1, temp2, M1);
 
 	mul_matrices(X, Y2, temp3);
-	mul_matrices(Vc, temp3, temp4);
+	mul_matrices(Vm, temp3, temp4);
 	mul_matrices(WTV1, temp4, M2);
 
 	mul_matrices(X, Y3, temp5);
-	mul_matrices(Vc, temp5, temp6);
+	mul_matrices(Vm, temp5, temp6);
 	mul_matrices(WTV1, temp6, M3);
 
 	mul_matrices(X, Y1, temp7);
-	mul_matrices(Vm, temp7, temp8);
+	mul_matrices(Vc, temp7, temp8);
 	mul_matrices(WTV2, temp8, M4);
 
 	mul_matrices(X, Y2, temp9);
-	mul_matrices(Vm, temp9, temp10);
+	mul_matrices(Vc, temp9, temp10);
 	mul_matrices(WTV2, temp10, M5);
 
 	mul_matrices(X, Y3, temp11);
-	mul_matrices(Vm, temp11, temp12);
+	mul_matrices(Vc, temp11, temp12);
 	mul_matrices(WTV2, temp12, M6);
-
-
-	/*for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4; j++){
-			std::cout << "VTW1[" << i << "][" << j << "] = " << WTV1[i][j] << std::endl;
-		}
-	}
-
-	for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4; j++){
-			std::cout << "M1[" << i << "][" << j << "] = " << M1[i][j] << std::endl;
-		}
-	}*/
 
 
 	Cube A = Cube();
 	Cube B = Cube();
-
-	/*A.transformTop(M1);
-	A.transformMid(M2);
-	A.transformBot(M3);
-
-	B.transformTop(M4);
-	B.transformMid(M5);
-	B.transformBot(M6);
-
-	*/
 
 	A.transformTopPoints(M1);
 	A.transformMidPoints(M2);
@@ -531,7 +429,6 @@ void display(){
 	B.draw();
 
 	glutSwapBuffers();
-	//glFlush();
 
 }
 
