@@ -187,6 +187,10 @@ public:
 		keyOperations();
 		
 		glColor3f(0.0, 0.0, 1.0);
+		/*
+		 *http://math.stackexchange.com/questions/253253/tracing-the-edges-of-a-cube-with-the-minimum-pencil-lifts
+		 */
+
 		glBegin(GL_LINE_LOOP);
 		glVertex2d(getPoint3D(pointsTop[2]).x, getPoint3D(pointsTop[2]).y);
 		glVertex2d(getPoint3D(pointsTop[3]).x, getPoint3D(pointsTop[3]).y);
