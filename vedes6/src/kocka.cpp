@@ -1,7 +1,7 @@
 #include "kocka.h"
 
 
-Cube::Cube(){
+Cube::Cube(GLdouble R, GLdouble G, GLdouble B){
 	//felső lap
 		C0 = POINT3DH(0.5, 0.5, 0.5);
 		C1 = POINT3DH(-0.5, 0.5, 0.5);
@@ -21,10 +21,14 @@ Cube::Cube(){
 		points.push_back(C5);
 		points.push_back(C6);
 		points.push_back(C7);
+
+		this->R = R;
+		this->G = G;
+		this->B = B;
 }
 
 
-Cube::Cube(GLdouble x, GLdouble y, GLdouble z){
+Cube::Cube(GLdouble x, GLdouble y, GLdouble z, GLdouble R, GLdouble G, GLdouble B){
 	//felső lap
 		C0 = POINT3DH(0.5+x, 0.5+y, 0.5+z);
 		C1 = POINT3DH(-0.5+x, 0.5+y, 0.5+z);
@@ -44,10 +48,14 @@ Cube::Cube(GLdouble x, GLdouble y, GLdouble z){
 		points.push_back(C5);
 		points.push_back(C6);
 		points.push_back(C7);
+
+		this->R = R;
+		this->G = G;
+		this->B = B;
 }
 
 void Cube::draw(){
-	glColor3f(0.0, 0.0, 0.5);
+	glColor3f(R/2, G/2, B/2);
 		glBegin(GL_POLYGON);
 		glVertex2f((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
 		glVertex2f((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
@@ -93,7 +101,7 @@ void Cube::draw(){
 		/*
 		 *http://math.stackexchange.com/questions/253253/tracing-the-edges-of-a-cube-with-the-minimum-pencil-lifts
 		 */
-		glColor3f(0.0, 0.0, 1.0);
+		glColor3f(R, G, B);
 		glLineWidth(5);
 		glBegin(GL_LINE_LOOP);
 		glVertex2d((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);

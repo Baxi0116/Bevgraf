@@ -25,24 +25,22 @@ void keyUp (unsigned char key, int x, int y) {
 	keyStates[key] = 0;
 }
 
+GLdouble alpha = 0.0;
 GLdouble delta = 0.0;
 
 POINT3D cam = POINT3D(5, 0, 0);
+GLdouble camRad = norm(cam);
 
 void keyOperations ( ) {
 
-	if (keyStates['a']) {cam.x = norm(cam) * cos(delta); cam.y = norm(cam) * sin(delta); delta += 0.01; /*alpha += delta;*/}
-	if (keyStates['d']) {cam.x = norm(cam) * cos(delta); cam.y = norm(cam) * sin(delta); delta -= 0.01; /*alpha -= delta;*/}
-	if (keyStates['w']) {cam.x = norm(cam) * cos(delta); cam.z = norm(cam) * sin(delta); delta += 0.01;}
-	if (keyStates['s']) {cam.x = norm(cam) * cos(delta); cam.z = norm(cam) * sin(delta); delta -= 0.01;}
+	if (keyStates['a']) {cam.x = camRad * cos(delta); cam.y = camRad * sin(delta); delta -= 0.01;}
+	if (keyStates['d']) {cam.x = camRad * cos(delta); cam.y = camRad * sin(delta); delta += 0.01;}
+	if (keyStates['w']) {cam.z += 0.1;}
+	if (keyStates['s']) {cam.z -= 0.1;}
+	if (keyStates['q']) {}
+	if (keyStates['e']) {}
 
 	glutPostRedisplay( );
-}
-
-
-POINT3D getPoint3D (POINT3DH a){
-	POINT3D b = POINT3D((a.x1/a.x4), (a.x2/a.x4), (a.x3/a.x4));
-	return b;
 }
 
 //kezdeti window az egységnégyzet
@@ -95,7 +93,6 @@ void display(){
 	GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/3, 1}};
 
 	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-	GLdouble temp2[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
 	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
@@ -110,31 +107,31 @@ void display(){
 		}
 	}*/
 
-	Cube A1 = Cube();
+	Cube A1 = Cube(0, 0, 1);
 	A1.transformPoints(M);
 	A1.draw();
 
-	Cube A2 = Cube(0, 0, 2);
+	Cube A2 = Cube(0, 0, 2, 0, 1, 0);
 	A2.transformPoints(M);
 	A2.draw();
 
-	Cube A3 = Cube(0, 0, -2);
+	Cube A3 = Cube(0, 0, -2, 1, 0, 0);
 	A3.transformPoints(M);
 	A3.draw();
 
-	Cube A4 = Cube(0, 2, 0);
+	Cube A4 = Cube(0, 2, 0, 1, 1, 0);
 	A4.transformPoints(M);
 	A4.draw();
 
-	Cube A5 = Cube(0, -2, 0);
+	Cube A5 = Cube(0, -2, 0, 1, 0, 1);
 	A5.transformPoints(M);
 	A5.draw();
 
-	Cube A6 = Cube(2, 0, 0);
+	Cube A6 = Cube(2, 0, 0, 0, 1, 1);
 	A6.transformPoints(M);
 	A6.draw();
 
-	Cube A7 = Cube(-2, 0, 0);
+	Cube A7 = Cube(-2, 0, 0, 0.5, 0.5, 0.5);
 	A7.transformPoints(M);
 	A7.draw();
 

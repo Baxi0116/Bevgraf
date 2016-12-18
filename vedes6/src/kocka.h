@@ -11,14 +11,16 @@
 class Cube{
 public:
 
-	Cube();
-	Cube(GLdouble x, GLdouble y, GLdouble z);
+	Cube(GLdouble R, GLdouble G, GLdouble B);
+	Cube(GLdouble x, GLdouble y, GLdouble z, GLdouble R, GLdouble G, GLdouble B);
 
 	void draw();
 
 	void transformPoints(double m[][4]);
 
 	POINT3DH C0, C1, C2, C3, C4, C5, C6, C7;
+
+	GLdouble R, G, B;
 
 	std::vector<POINT3DH> points;
 
