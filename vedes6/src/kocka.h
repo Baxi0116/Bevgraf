@@ -3,9 +3,11 @@
 
 #include <GL/glut.h>
 #include <vector>
+#include <iostream>
 
 #include "point3dh.h"
 #include "point3d.h"
+#include "lap.h"
 
 
 class Cube{
@@ -22,7 +24,11 @@ public:
 
 	GLdouble R, G, B;
 
+	Lap L1, L2, L3, L4, L5, L6;
+
 	std::vector<POINT3DH> points;
+
+	std::vector<Lap> lapok;
 
 };
 

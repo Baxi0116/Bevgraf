@@ -28,17 +28,20 @@ void keyUp (unsigned char key, int x, int y) {
 GLdouble alpha = 0.0;
 GLdouble delta = 0.0;
 
-POINT3D cam = POINT3D(5, 0, 0);
-GLdouble camRad = norm(cam);
+GLdouble camRad = 5;
+POINT3D cam;
+GLdouble s = 3;
+POINT3D centrum = POINT3D(0, 0, s);
+
 
 void keyOperations ( ) {
 
-	if (keyStates['a']) {cam.x = camRad * cos(delta); cam.y = camRad * sin(delta); delta -= 0.01;}
-	if (keyStates['d']) {cam.x = camRad * cos(delta); cam.y = camRad * sin(delta); delta += 0.01;}
-	if (keyStates['w']) {cam.z += 0.1;}
-	if (keyStates['s']) {cam.z -= 0.1;}
-	if (keyStates['q']) {}
-	if (keyStates['e']) {}
+	if (keyStates['q'] && camRad > 3) {camRad -= 0.1;}
+	if (keyStates['e'] && camRad < 6) {camRad += 0.1;}
+	if (keyStates['a']) { delta -= 0.01;}
+	if (keyStates['d']) { delta += 0.01;}
+	if (keyStates['w'] && alpha < 10) {alpha += 0.1;}
+	if (keyStates['s'] && alpha > -10) {alpha -= 0.1;}
 
 	glutPostRedisplay( );
 }
@@ -72,10 +75,19 @@ void init (void)
 	gluOrtho2D (0.0, 800.0, 0.0, 600.0);
 }
 
+void placeCam(){
+	cam = POINT3D(camRad, 0, 0);
+	cam.x = camRad * cos(delta); cam.y = camRad * sin(delta);
+	cam.x = camRad * cos(delta); cam.y = camRad * sin(delta);
+	cam.z += alpha;
+}
+
 
 void display(){
 
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	placeCam();
 
 	POINT3D up = POINT3D(0, 0, 1);
 	POINT3D KP = POINT3D(cam.x, cam.y, cam.z); //(0,0,0)-t vonjuk le belőle
@@ -90,16 +102,20 @@ void display(){
 
 	window_to_viewport(WinMax, WinMin, View1Max, View1Min, WTV);
 
-	GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/3, 1}};
+	GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/s, 1}};
 
 	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
 	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
-	keyOperations();
+	
 
 	mul_matrices(Vc, K, temp1);
 	mul_matrices(WTV, temp1, M);
+
+	keyOperations();
+
+	//std::cout << camRad << std::endl;
 
 	/*for(int i = 0; i < 4; i++){
 		for(int j = 0; j < 4; j++){
@@ -134,6 +150,8 @@ void display(){
 	Cube A7 = Cube(-2, 0, 0, 0.5, 0.5, 0.5);
 	A7.transformPoints(M);
 	A7.draw();
+
+
 
 	glutSwapBuffers();
 

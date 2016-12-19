@@ -22,6 +22,14 @@ Cube::Cube(GLdouble R, GLdouble G, GLdouble B){
 		points.push_back(C6);
 		points.push_back(C7);
 
+
+		L1 = Lap(points[0], points[1], points[2], points[3]);
+		L2 = Lap(points[0], points[1], points[5], points[4]);
+		L3 = Lap(points[0], points[4], points[7], points[3]);
+		L4 = Lap(points[3], points[7], points[6], points[2]);
+		L5 = Lap(points[4], points[5], points[6], points[7]);
+		L6 = Lap(points[1], points[2], points[6], points[5]);
+
 		this->R = R;
 		this->G = G;
 		this->B = B;
@@ -49,80 +57,32 @@ Cube::Cube(GLdouble x, GLdouble y, GLdouble z, GLdouble R, GLdouble G, GLdouble 
 		points.push_back(C6);
 		points.push_back(C7);
 
+		lapok.resize(6);
+
+		lapok[0] = Lap(points[0], points[1], points[2], points[3]);
+		lapok[1] = Lap(points[0], points[1], points[5], points[4]);
+		lapok[2] = Lap(points[0], points[4], points[7], points[3]);
+		lapok[3] = Lap(points[3], points[7], points[6], points[2]);
+		lapok[4] = Lap(points[4], points[5], points[6], points[7]);
+		lapok[5] = Lap(points[1], points[2], points[6], points[5]);
+
 		this->R = R;
 		this->G = G;
 		this->B = B;
 }
 
 void Cube::draw(){
-	glColor3f(R/2, G/2, B/2);
-		glBegin(GL_POLYGON);
-		glVertex2f((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
-		glVertex2f((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
-		glVertex2f((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);
-		glVertex2f((points[3].getPoint3D()).x, (points[3].getPoint3D()).y);
-		glEnd();
 
-		glBegin(GL_POLYGON);
-		glVertex2f((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
-		glVertex2f((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
-		glVertex2f((points[5].getPoint3D()).x, (points[5].getPoint3D()).y);
-		glVertex2f((points[4].getPoint3D()).x, (points[4].getPoint3D()).y);
-		glEnd();
+	/*for(int i = 0; i < 6; i++){
+		std::cout << lapok[i].getNormalVector().x << " " << lapok[i].getNormalVector().y << " " << lapok[i].getNormalVector().z << std::endl;
+	}*/
 
-		glBegin(GL_POLYGON);
-		glVertex2f((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
-		glVertex2f((points[4].getPoint3D()).x, (points[4].getPoint3D()).y);
-		glVertex2f((points[7].getPoint3D()).x, (points[7].getPoint3D()).y);
-		glVertex2f((points[3].getPoint3D()).x, (points[3].getPoint3D()).y);
-		glEnd();
-
-		glBegin(GL_POLYGON);
-		glVertex2f((points[3].getPoint3D()).x, (points[3].getPoint3D()).y);
-		glVertex2f((points[7].getPoint3D()).x, (points[7].getPoint3D()).y);
-		glVertex2f((points[6].getPoint3D()).x, (points[6].getPoint3D()).y);
-		glVertex2f((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);
-		glEnd();
-		glBegin(GL_POLYGON);
-		glVertex2f((points[4].getPoint3D()).x, (points[4].getPoint3D()).y);
-		glVertex2f((points[5].getPoint3D()).x, (points[5].getPoint3D()).y);
-		glVertex2f((points[6].getPoint3D()).x, (points[6].getPoint3D()).y);
-		glVertex2f((points[7].getPoint3D()).x, (points[7].getPoint3D()).y);
-		glEnd();
-
-		glBegin(GL_POLYGON);
-		glVertex2f((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
-		glVertex2f((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);
-		glVertex2f((points[6].getPoint3D()).x, (points[6].getPoint3D()).y);
-		glVertex2f((points[5].getPoint3D()).x, (points[5].getPoint3D()).y);
-		glEnd();
-
-
-		/*
-		 *http://math.stackexchange.com/questions/253253/tracing-the-edges-of-a-cube-with-the-minimum-pencil-lifts
-		 */
-		glColor3f(R, G, B);
-		glLineWidth(5);
-		glBegin(GL_LINE_LOOP);
-		glVertex2d((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);
-		glVertex2d((points[3].getPoint3D()).x, (points[3].getPoint3D()).y);
-		glVertex2d((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
-		glVertex2d((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
-		glVertex2d((points[2].getPoint3D()).x, (points[2].getPoint3D()).y);
-		glVertex2d((points[6].getPoint3D()).x, (points[6].getPoint3D()).y);
-		glVertex2d((points[7].getPoint3D()).x, (points[7].getPoint3D()).y);
-		glVertex2d((points[4].getPoint3D()).x, (points[4].getPoint3D()).y);
-		glVertex2d((points[5].getPoint3D()).x, (points[5].getPoint3D()).y);
-		glVertex2d((points[6].getPoint3D()).x, (points[6].getPoint3D()).y);
-		glEnd();
-		glBegin(GL_LINES);
-		glVertex2d((points[1].getPoint3D()).x, (points[1].getPoint3D()).y);
-		glVertex2d((points[5].getPoint3D()).x, (points[5].getPoint3D()).y);
-		glVertex2d((points[0].getPoint3D()).x, (points[0].getPoint3D()).y);
-		glVertex2d((points[4].getPoint3D()).x, (points[4].getPoint3D()).y);
-		glVertex2d((points[3].getPoint3D()).x, (points[3].getPoint3D()).y);
-		glVertex2d((points[7].getPoint3D()).x, (points[7].getPoint3D()).y);
-		glEnd();	
+	lapok[0].draw(R,G,B);
+	lapok[1].draw(R,G,B);
+	lapok[2].draw(R,G,B);
+	lapok[3].draw(R,G,B);
+	lapok[4].draw(R,G,B);
+	lapok[5].draw(R,G,B);
 }
 
 
@@ -136,4 +96,12 @@ void Cube::transformPoints(double m[][4]){
 			q.x4 = m[3][0] * (*it).x1 + m[3][1] * (*it).x2 + m[3][2] * (*it).x3 + m[3][3] * (*it).x4;
 			(*it) = q;
 		}
+
+		lapok.resize(6);
+		lapok[0] = Lap(points[0], points[1], points[2], points[3]);
+		lapok[1] = Lap(points[0], points[1], points[5], points[4]);
+		lapok[2] = Lap(points[0], points[4], points[7], points[3]);
+		lapok[3] = Lap(points[3], points[7], points[6], points[2]);
+		lapok[4] = Lap(points[4], points[5], points[6], points[7]);
+		lapok[5] = Lap(points[1], points[2], points[6], points[5]);
 }
