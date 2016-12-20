@@ -15,5 +15,7 @@ double norm(POINT3D A);
 
 POINT3D vect_norm(POINT3D A);
 
+POINT3D makeVect(POINT3D a, POINT3D b);
+
 
 #endif

@@ -14,9 +14,8 @@ class Lap
 public:
 
 	Lap();
-	Lap(POINT3DH, POINT3DH, POINT3DH, POINT3DH);
+	Lap(POINT3DH, POINT3DH, POINT3DH, POINT3DH, GLdouble, GLdouble, GLdouble);
 
-	void draw(GLdouble, GLdouble, GLdouble);
 	void draw();
 
 	POINT3D getNormalVector();
@@ -28,6 +27,8 @@ public:
 	POINT3D getWeight();
 
 	GLdouble camDist();
+
+	GLdouble R, G, B;
 };
 
 #endif

@@ -10,7 +10,6 @@
 #include "compgraph.h"
 #include "kocka.h"
 
-const double PI = 3.141592653589;
 
 const int WIDTH = 800;
 const int HEIGHT = 600;
@@ -33,6 +32,7 @@ GLdouble camRad = 5;
 POINT3D cam;
 GLdouble s = 3;
 POINT3D centrum = POINT3D(0, 0, s);
+POINT3D origo = POINT3D(0, 0, 0);
 
 
 void keyOperations ( ) {
@@ -47,7 +47,6 @@ void keyOperations ( ) {
 	glutPostRedisplay( );
 }
 
-//kezdeti window az egységnégyzet
 
 POINT3D WinMax = POINT3D(1, 1, 0);
 POINT3D WinMin = POINT3D(-1, -1, 0);
@@ -86,7 +85,9 @@ bool compare(Lap a, Lap b){
 }
 
 bool isnotVisible(Lap a){
-	return inner_product((a.getNormalVector()), POINT3D((centrum.x-a.C1.getPoint3D().x),(centrum.y-a.C1.getPoint3D().y),(centrum.z-a.C1.getPoint3D().z))) < 0;
+	GLdouble ip;
+	ip = inner_product((a.getNormalVector()), (makeVect(centrum, a.getWeight())));
+	return (ip < 0);
 }
 
 
@@ -97,38 +98,31 @@ void display(){
 	placeCam();
 
 	POINT3D up = POINT3D(0, 0, 1);
-	POINT3D KP = POINT3D(cam.x, cam.y, cam.z); //(0,0,0)-t vonjuk le belőle
-	POINT3D W = vect_norm(KP);
+	POINT3D PK = POINT3D(-(origo.x - cam.x), -(origo.y - cam.y), -(origo.z - cam.z));
+	POINT3D W = vect_norm(PK);
 	POINT3D upxW = vectorial_product(up, W);
 	POINT3D U = vect_norm(upxW);
 	POINT3D WxU = vectorial_product(W, U);
 	POINT3D V = vect_norm(WxU);
 
 	GLdouble K[4][4] = {{U.x, U.y, U.z, -(inner_product(cam, U))}, {V.x, V.y, V.z, -(inner_product(cam, V))}, {W.x, W.y, W.z, -(inner_product(cam, W))}, {0, 0, 0, 1}};
-	GLdouble WTV[4][4] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0},{0, 0, 0}};
+	GLdouble WTV[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0},{0, 0, 0, 0}};
 
 	window_to_viewport(WinMax, WinMin, View1Max, View1Min, WTV);
 
 	GLdouble Vc[4][4] = {{1, 0, 0, 0},{0, 1, 0, 0}, {0, 0, 0, 0}, {0, 0, -1.0/s, 1}};
-
-	GLdouble temp1[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-
 	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
 	
-	Cube A1 = Cube(0, 0, 1);
+	Cube A1 = Cube(0.5, 0.5, 0.5);
 	Cube A2 = Cube(0, 0, 2, 0, 1, 0);
 	Cube A3 = Cube(0, 0, -2, 1, 0, 0);
 	Cube A4 = Cube(0, 2, 0, 1, 1, 0);
 	Cube A5 = Cube(0, -2, 0, 1, 0, 1);
 	Cube A6 = Cube(2, 0, 0, 0, 1, 1);
-	Cube A7 = Cube(-2, 0, 0, 0.5, 0.5, 0.5);
+	Cube A7 = Cube(-2, 0, 0, 0, 0, 1);
 
-
-	//mul_matrices(Vc, K, temp1);
 	mul_matrices(WTV, Vc, M);
-
-	//mul_matrices(WTV, K, M);
 
 	keyOperations();
 
@@ -167,8 +161,8 @@ void display(){
 
 
 	for(auto it = mindenlap.begin(); it != mindenlap.end();){
-		
-		if(inner_product(((*it).getNormalVector()), POINT3D((centrum.x-(*it).C1.getPoint3D().x),(centrum.y-(*it).C1.getPoint3D().y),(centrum.z-(*it).C1.getPoint3D().z))) > 0){
+
+		if(isnotVisible((*it))){
 			it = mindenlap.erase(it);
 		} else {
 			it++;
@@ -176,7 +170,6 @@ void display(){
 
 	}
 
-	//std::remove_if(mindenlap.begin(), mindenlap.end(), isnotVisible);
 
 	std::sort(mindenlap.begin(), mindenlap.end(), compare);
 
@@ -187,40 +180,6 @@ void display(){
 		(*it).C3.trsf(M);
 		(*it).draw();
 	}
-
-
-
-
-	//std::cout << camRad << std::endl;
-
-	/*for(int i = 0; i < 4; i++){
-		for(int j = 0; j < 4; j++){
-			std::cout << "K[" << i << "][" << j << "] = " << K[i][j] << std::endl; 
-		}
-	*/
-
-	/*A1.transformPoints(M);
-	A1.draw();
-
-	/*A2.transformPoints(M);
-	A2.draw();
-
-	A3.transformPoints(M);
-	A3.draw();
-	
-	A4.transformPoints(M);
-	A4.draw();
-
-	A5.transformPoints(M);
-	A5.draw();
-	
-	A6.transformPoints(M);
-	A6.draw();
-	
-	A7.transformPoints(M);
-	A7.draw();*/
-
-
 
 	glutSwapBuffers();
 

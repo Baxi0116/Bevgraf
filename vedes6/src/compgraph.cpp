@@ -38,3 +38,12 @@ POINT3D vect_norm(POINT3D A){
 
 	return res;
 }
+
+
+POINT3D makeVect(POINT3D a, POINT3D b){
+	POINT3D res;
+	res.x = a.x-b.x;
+	res.y = a.y-b.y;
+	res.z = a.z-b.z;
+	return res;
+}
