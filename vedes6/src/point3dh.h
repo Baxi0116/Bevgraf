@@ -41,6 +41,20 @@ public:
 		return b;
 	}
 
+	void trsf(GLdouble m[][4]){
+
+		POINT3DH q = POINT3DH(0, 0, 0);
+			q.x1 = m[0][0] * x1 + m[0][1] * x2 + m[0][2] * x3 + m[0][3] * x4;
+			q.x2 = m[1][0] * x1 + m[1][1] * x2 + m[1][2] * x3 + m[1][3] * x4;
+			q.x3 = m[2][0] * x1 + m[2][1] * x2 + m[2][2] * x3 + m[2][3] * x4;
+			q.x4 = m[3][0] * x1 + m[3][1] * x2 + m[3][2] * x3 + m[3][3] * x4;
+			
+		this -> x1 = q.x1;
+		this -> x2 = q.x2;
+		this -> x3 = q.x3;
+		this -> x4 = q.x4;
+	}
+
 	double x1, x2, x3, x4;
 };
 

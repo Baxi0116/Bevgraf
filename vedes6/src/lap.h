@@ -17,13 +17,17 @@ public:
 	Lap(POINT3DH, POINT3DH, POINT3DH, POINT3DH);
 
 	void draw(GLdouble, GLdouble, GLdouble);
+	void draw();
 
 	POINT3D getNormalVector();
-	void setNormalVector();
 	
 	POINT3DH C0, C1, C2, C3;
 
 	POINT3D normVect;
+
+	POINT3D getWeight();
+
+	GLdouble camDist();
 };
 
 #endif

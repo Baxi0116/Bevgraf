@@ -2,6 +2,7 @@
 #include <math.h>
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "point3d.h"
 #include "point3dh.h"
@@ -51,8 +52,6 @@ void keyOperations ( ) {
 POINT3D WinMax = POINT3D(1, 1, 0);
 POINT3D WinMin = POINT3D(-1, -1, 0);
 
-//két részre osztjuk az ablakot view1 a bal oldali view2 a jobb oldali
-
 POINT3D View1Max = POINT3D(600, 500, 0);
 POINT3D View1Min = POINT3D(200, 100, 0);
 
@@ -82,6 +81,14 @@ void placeCam(){
 	cam.z += alpha;
 }
 
+bool compare(Lap a, Lap b){
+	return (a.camDist() > b.camDist());
+}
+
+bool isnotVisible(Lap a){
+	return inner_product((a.getNormalVector()), POINT3D((centrum.x-a.C1.getPoint3D().x),(centrum.y-a.C1.getPoint3D().y),(centrum.z-a.C1.getPoint3D().z))) < 0;
+}
+
 
 void display(){
 
@@ -109,11 +116,80 @@ void display(){
 	GLdouble M[4][4] = {{0, 0, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
 
 	
+	Cube A1 = Cube(0, 0, 1);
+	Cube A2 = Cube(0, 0, 2, 0, 1, 0);
+	Cube A3 = Cube(0, 0, -2, 1, 0, 0);
+	Cube A4 = Cube(0, 2, 0, 1, 1, 0);
+	Cube A5 = Cube(0, -2, 0, 1, 0, 1);
+	Cube A6 = Cube(2, 0, 0, 0, 1, 1);
+	Cube A7 = Cube(-2, 0, 0, 0.5, 0.5, 0.5);
 
-	mul_matrices(Vc, K, temp1);
-	mul_matrices(WTV, temp1, M);
+
+	//mul_matrices(Vc, K, temp1);
+	mul_matrices(WTV, Vc, M);
+
+	//mul_matrices(WTV, K, M);
 
 	keyOperations();
+
+	A1.transformPoints(K);
+	A2.transformPoints(K);
+	A3.transformPoints(K);
+	A4.transformPoints(K);
+	A5.transformPoints(K);
+	A6.transformPoints(K);
+	A7.transformPoints(K);
+
+
+	std::vector<Lap> mindenlap;
+
+	for(size_t i = 0; i < A1.lapok.size(); i++){
+		mindenlap.push_back(A1.lapok[i]);
+	}
+	for(size_t i = 0; i < A2.lapok.size(); i++){
+		mindenlap.push_back(A2.lapok[i]);
+	}
+	for(size_t i = 0; i < A3.lapok.size(); i++){
+		mindenlap.push_back(A3.lapok[i]);
+	}
+	for(size_t i = 0; i < A4.lapok.size(); i++){
+		mindenlap.push_back(A4.lapok[i]);
+	}
+	for(size_t i = 0; i < A5.lapok.size(); i++){
+		mindenlap.push_back(A5.lapok[i]);
+	}
+	for(size_t i = 0; i < A6.lapok.size(); i++){
+		mindenlap.push_back(A6.lapok[i]);
+	}
+	for(size_t i = 0; i < A7.lapok.size(); i++){
+		mindenlap.push_back(A7.lapok[i]);
+	}
+
+
+	for(auto it = mindenlap.begin(); it != mindenlap.end();){
+		
+		if(inner_product(((*it).getNormalVector()), POINT3D((centrum.x-(*it).C1.getPoint3D().x),(centrum.y-(*it).C1.getPoint3D().y),(centrum.z-(*it).C1.getPoint3D().z))) > 0){
+			it = mindenlap.erase(it);
+		} else {
+			it++;
+		}
+
+	}
+
+	//std::remove_if(mindenlap.begin(), mindenlap.end(), isnotVisible);
+
+	std::sort(mindenlap.begin(), mindenlap.end(), compare);
+
+	for(auto it = mindenlap.begin(); it != mindenlap.end(); it++){
+		(*it).C0.trsf(M);
+		(*it).C1.trsf(M);
+		(*it).C2.trsf(M);
+		(*it).C3.trsf(M);
+		(*it).draw();
+	}
+
+
+
 
 	//std::cout << camRad << std::endl;
 
@@ -121,35 +197,28 @@ void display(){
 		for(int j = 0; j < 4; j++){
 			std::cout << "K[" << i << "][" << j << "] = " << K[i][j] << std::endl; 
 		}
-	}*/
+	*/
 
-	Cube A1 = Cube(0, 0, 1);
-	A1.transformPoints(M);
+	/*A1.transformPoints(M);
 	A1.draw();
 
-	Cube A2 = Cube(0, 0, 2, 0, 1, 0);
-	A2.transformPoints(M);
+	/*A2.transformPoints(M);
 	A2.draw();
 
-	Cube A3 = Cube(0, 0, -2, 1, 0, 0);
 	A3.transformPoints(M);
 	A3.draw();
-
-	Cube A4 = Cube(0, 2, 0, 1, 1, 0);
+	
 	A4.transformPoints(M);
 	A4.draw();
 
-	Cube A5 = Cube(0, -2, 0, 1, 0, 1);
 	A5.transformPoints(M);
 	A5.draw();
-
-	Cube A6 = Cube(2, 0, 0, 0, 1, 1);
+	
 	A6.transformPoints(M);
 	A6.draw();
-
-	Cube A7 = Cube(-2, 0, 0, 0.5, 0.5, 0.5);
+	
 	A7.transformPoints(M);
-	A7.draw();
+	A7.draw();*/
 
 
 
